@@ -1,8 +1,9 @@
-const processPayment = () => {
-  console.log("payment");
-  // Simulate some payment processing
+const processPayment = (log, context = {}) => {
+  log.info({ ...context }, 'payment.processing');
+
   setTimeout(() => {
-    console.log("done");
+    log.warn({ ...context, waitMs: 500 }, 'payment.retrying');
+    log.error({ ...context, waitMs: 500, reason: 'gateway.timeout' }, 'payment.failed');
   }, 500);
 };
 
